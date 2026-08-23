@@ -35,8 +35,9 @@ function login(){
           <div class="brand-main">
             mo<span>T</span>udo
           </div>
+
           <div class="brand-sub">
-            SH<span>/</span>NERAY
+            OFICINA
           </div>
         </div>
 
@@ -48,6 +49,7 @@ function login(){
 
         <div class="field">
           <div class="field-icon">✉</div>
+
           <input
             id="email"
             type="email"
@@ -58,12 +60,14 @@ function login(){
 
         <div class="field">
           <div class="field-icon">♙</div>
+
           <input
             id="pass"
             type="password"
             placeholder="Senha"
             autocomplete="current-password"
           >
+
           <button
             type="button"
             class="show-password"
@@ -103,7 +107,8 @@ function login(){
     const password=document.querySelector('#pass').value;
 
     if(!email || !password){
-      document.querySelector('#msg').textContent='Informe seu e-mail e senha.';
+      document.querySelector('#msg').textContent=
+        'Informe seu e-mail e senha.';
       return;
     }
 
