@@ -30,41 +30,96 @@ function login(){
   app.innerHTML=`
     <div class="login">
       <div class="box">
+
         <div class="login-brand">
-          <div class="brand-main">MOTUDO</div>
-          <div class="brand-sub">SHINERAY</div>
+          <div class="brand-main">
+            mo<span>T</span>udo
+          </div>
+          <div class="brand-sub">
+            SH<span>/</span>NERAY
+          </div>
         </div>
 
-        <h1>Oficina <span>Motudo Shineray</span></h1>
+        <p class="login-subtitle">
+          Acesso ao sistema da oficina
+        </p>
 
-        <p>Acesso ao sistema da oficina</p>
+        <div class="login-divider"></div>
 
-        <label>E-mail</label>
-        <input id="email" type="email" placeholder="Digite seu e-mail">
+        <div class="field">
+          <div class="field-icon">✉</div>
+          <input
+            id="email"
+            type="email"
+            placeholder="E-mail"
+            autocomplete="email"
+          >
+        </div>
 
-        <label>Senha</label>
-        <input id="pass" type="password" placeholder="Digite sua senha">
+        <div class="field">
+          <div class="field-icon">♙</div>
+          <input
+            id="pass"
+            type="password"
+            placeholder="Senha"
+            autocomplete="current-password"
+          >
+          <button
+            type="button"
+            class="show-password"
+            id="showPassword"
+          >●</button>
+        </div>
 
-        <button id="login">ENTRAR</button>
+        <button id="login" class="login-button">
+          ENTRAR
+          <span>›</span>
+        </button>
+
+        <button type="button" class="forgot-password">
+          🔒 Esqueci minha senha
+        </button>
 
         <div id="msg"></div>
+
       </div>
     </div>
   `;
 
+  document.querySelector('#showPassword').onclick=()=>{
+    const input=document.querySelector('#pass');
+
+    if(input.type==='password'){
+      input.type='text';
+      document.querySelector('#showPassword').textContent='○';
+    }else{
+      input.type='password';
+      document.querySelector('#showPassword').textContent='●';
+    }
+  };
+
   document.querySelector('#login').onclick=async()=>{
+    const email=document.querySelector('#email').value.trim();
+    const password=document.querySelector('#pass').value;
+
+    if(!email || !password){
+      document.querySelector('#msg').textContent='Informe seu e-mail e senha.';
+      return;
+    }
+
     if(!sb){
-      msg.textContent='Configure o .env com as credenciais do Supabase.';
+      document.querySelector('#msg').textContent=
+        'Configure o .env com as credenciais do Supabase.';
       return;
     }
 
     const {error}=await sb.auth.signInWithPassword({
-      email:email.value,
-      password:pass.value
+      email,
+      password
     });
 
     if(error){
-      msg.textContent=error.message;
+      document.querySelector('#msg').textContent=error.message;
     }else{
       load();
     }
