@@ -191,6 +191,8 @@ route('os');
 
 });
 
+}
+
 } if(p==='dia'){const render=()=>{const d=day.value,a=agendamentos.filter(x=>x.data===d).sort((x,y)=>x.horario.localeCompare(y.horario));dayt.innerHTML='<table><tr><th>Hora</th><th>Cliente</th><th>Placa</th><th>Serviço</th><th>Status</th></tr>'+a.map(x=>`<tr><td>${x.horario}</td><td>${esc(x.cliente_nome)}</td><td>${x.placa}</td><td>${esc(x.servico)}</td><td>${x.status}</td></tr>`).join('')+'</table>'};day.onchange=render;render()}
 }
 load()
