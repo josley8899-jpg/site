@@ -23,7 +23,7 @@ body {
   overflow: hidden;
 
   background-color: #050505;
-  background-image: url("./login-bg.png.png");
+  background-image: none;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
