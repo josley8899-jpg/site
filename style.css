@@ -36,11 +36,11 @@ body {
 /* CARD */
 
 .login .box {
-  width: 330px;
+  width: 320px;
   min-height: 0;
   height: auto;
 
-  padding: 24px 22px 18px;
+  padding: 23px 20px 17px;
 
   background: rgba(255, 255, 255, 0.97);
 
@@ -56,16 +56,16 @@ body {
   flex-direction: column;
   align-items: stretch;
 }
-
 /* LOGO */
 
 .login-brand {
   text-align: center;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 
+
 .brand-main {
-  font-size: 32px;
+  font-size: 31px;
   line-height: 0.9;
   font-weight: 800;
   letter-spacing: -2px;
@@ -77,14 +77,10 @@ body {
 }
 
 .brand-sub {
-  margin-top: 3px;
-
-  font-size: 20px;
+  margin-top: 2px;
+  font-size: 19px;
   line-height: 1;
-
   font-weight: 900;
-  letter-spacing: -0.5px;
-
   color: #111;
 }
 
@@ -95,7 +91,7 @@ body {
 /* TEXTO */
 
 .login-subtitle {
-  margin: 7px 0 3px;
+  margin: 6px 0 2px;
   text-align: center;
   font-size: 10px;
   color: #555;
@@ -105,11 +101,8 @@ body {
 .login-divider {
   width: 25px;
   height: 3px;
-
-  margin: 3px auto 11px;
-
+  margin: 3px auto 9px;
   background: #d71920;
-
   border-radius: 10px;
 }
 
