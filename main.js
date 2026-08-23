@@ -44,8 +44,65 @@ function route(p){
 function dashboard(){const d=new Date().toISOString().slice(0,10),a=agendamentos.filter(x=>x.data===d),cap=8,p=(a.length/cap*100).toFixed(1)
 return `<h1>Painel de Gestão</h1><div class="cards">${[['Agendamentos hoje',a.length],['Em serviço',os.filter(x=>x.status==='EM SERVIÇO').length],['Prontas',os.filter(x=>x.status==='PRONTO').length],['Entregues',os.filter(x=>x.status==='ENTREGUE').length],['Aguardando peça',os.filter(x=>x.impedimento==='Falta de peça').length],['Atrasadas',os.filter(x=>x.previsao_entrega&&new Date(x.previsao_entrega)<new Date()&&!['ENTREGUE','CANCELADO'].includes(x.status)).length]].map(x=>`<div class="card"><small>${x[0]}</small><strong>${x[1]}</strong></div>`).join('')}</div><div class="panel"><b>Capacidade × Demanda</b><p>Capacidade: ${cap} | Demanda: ${a.length} | Ocupação: ${p}%</p><span class="badge ${a.length>cap?'red':'green'}">${a.length>cap?'ACIMA DA CAPACIDADE':'DENTRO DA CAPACIDADE'}</span></div>`}
 function clientesPage(){return `<h1>Clientes e Veículos</h1><div class="panel"><h3>Novo cliente</h3><div class="grid"><input id="cn" placeholder="Nome *"><input id="cd" placeholder="CPF/CNPJ"><input id="cw" placeholder="WhatsApp"><input id="ce" placeholder="E-mail"><input id="cend" placeholder="Endereço"></div><h3>Veículo</h3><div class="grid"><input id="cp" placeholder="Placa *"><input id="cm" placeholder="Marca"><input id="cmo" placeholder="Modelo"><input id="cy" placeholder="Ano" type="number"></div><button id="saveClient">Cadastrar</button><div id="msg"></div></div><div class="panel"><table><tr><th>Cliente</th><th>WhatsApp</th><th>Placa</th><th>Veículo</th><th>Ano</th></tr>${veiculos.map(v=>{let c=clientes.find(x=>x.id===v.cliente_id)||{};return `<tr><td>${esc(c.nome)}</td><td>${esc(c.whatsapp)}</td><td><b>${esc(v.placa)}</b></td><td>${esc(v.marca)} ${esc(v.modelo)}</td><td>${v.ano||''}</td></tr>`}).join('')}</table></div>`}
-function agendaPage(){return `<h1>Agendamentos</h1><div class="panel"><div class="grid"><input id="ad" type="date"><input id="ah" type="time"><select id="ap"><option value="">Placa</option>${veiculos.map(v=>`<option value="${v.id}">${v.placa}</option>`).join('')}</select><input id="acl" placeholder="Cliente" readonly><input id="aw" placeholder="WhatsApp" readonly><input id="as" placeholder="Serviço"><select id="ast">${statuses.map(s=>`<option>${s}</option>`).join('')}</select></div><button id="saveAppt">Salvar</button></div><div class="panel"><table><tr><th>Data</th><th>Hora</th><th>Placa</th><th>Cliente</th><th>Serviço</th><th>Status</th></tr>${agendamentos.map(a=>`<tr><td>${a.data}</td><td>${a.horario}</td><td>${a.placa}</td><td>${esc(a.cliente_nome)}</td><td>${esc(a.servico)}</td><td>${esc(a.status)}</td></tr>`).join('')}</table></div>`}
-function osPage(){
+function agendaPage(){
+return `<h1>Agendamentos</h1>
+<div class="panel">
+<div class="grid">
+<input id="ad" type="date">
+<input id="ah" type="time">
+<select id="ap">
+<option value="">Placa</option>
+${veiculos.map(v=>`<option value="${v.id}">${v.placa}</option>`).join('')}
+</select>
+<input id="acl" placeholder="Cliente" readonly>
+<input id="aw" placeholder="WhatsApp" readonly>
+<input id="as" placeholder="Serviço">
+<select id="ast">
+${statuses.map(s=>`<option>${s}</option>`).join('')}
+</select>
+</div>
+<button id="saveAppt">Salvar</button>
+</div>
+
+<div class="panel">
+<table>
+<tr>
+<th>Data</th>
+<th>Hora</th>
+<th>Placa</th>
+<th>Cliente</th>
+<th>Serviço</th>
+<th>Status</th>
+<th>Ação</th>
+</tr>
+
+${agendamentos.map(a=>`
+<tr>
+<td>${a.data}</td>
+<td>${a.horario}</td>
+<td>${esc(a.placa)}</td>
+<td>${esc(a.cliente_nome)}</td>
+<td>${esc(a.servico)}</td>
+
+<td>
+<select id="status-appt-${a.id}">
+${statuses.map(s=>`
+<option value="${s}" ${s===a.status?'selected':''}>${s}</option>
+`).join('')}
+</select>
+</td>
+
+<td>
+<button class="saveApptStatus" data-id="${a.id}">
+Salvar
+</button>
+</td>
+</tr>
+`).join('')}
+
+</table>
+</div>`
+}function osPage(){
 return `<h1>Controle de Serviços / O.S.</h1>
 <div class="panel">
 <div class="grid">
@@ -119,8 +176,50 @@ Salvar
 }
 function bind(p){
  if(p==='clientes')document.querySelector('#saveClient').onclick=async()=>{const nome=cn.value.trim(),placa=cp.value.trim().toUpperCase();if(!nome||!placa)return msg.textContent='Nome e placa são obrigatórios.';const {data:c,error:e}=await sb.from('clientes').insert({nome,cpf_cnpj:cd.value,whatsapp:cw.value,email:ce.value,endereco:cend.value}).select().single();if(e)return msg.textContent=e.message;const {error:e2}=await sb.from('veiculos').insert({cliente_id:c.id,placa,marca:cm.value,modelo:cmo.value,ano:cy.value?Number(cy.value):null});if(e2){await sb.from('clientes').delete().eq('id',c.id);return msg.textContent=e2.message}await refresh();route('clientes')}
- if(p==='agendamentos'){ap.onchange=()=>{const v=veiculos.find(v=>v.id===ap.value),c=clientes.find(c=>c.id===v?.cliente_id);acl.value=c?.nome||'';aw.value=c?.whatsapp||''};saveAppt.onclick=async()=>{const {error}=await sb.from('agendamentos').insert({veiculo_id:ap.value,data:ad.value,horario:ah.value,servico:as.value,status:ast.value});if(error)return alert(error.message);await refresh();route('agendamentos')}}
-if(p==='os'){
+if(p==='agendamentos'){
+  ap.onchange=()=>{
+    const v=veiculos.find(v=>v.id===ap.value),
+          c=clientes.find(c=>c.id===v?.cliente_id);
+    acl.value=c?.nome||'';
+    aw.value=c?.whatsapp||'';
+  };
+
+  saveAppt.onclick=async()=>{
+    const {error}=await sb.from('agendamentos').insert({
+      veiculo_id:ap.value,
+      data:ad.value,
+      horario:ah.value,
+      servico:as.value,
+      status:ast.value
+    });
+
+    if(error)return alert(error.message);
+
+    await refresh();
+    route('agendamentos');
+  };
+
+  document.querySelectorAll('.saveApptStatus').forEach(btn=>{
+    btn.onclick=async()=>{
+      const id=btn.dataset.id;
+      const select=document.querySelector(`#status-appt-${id}`);
+      const status=select.value;
+
+      const {error}=await sb
+        .from('agendamentos')
+        .update({status})
+        .eq('id',id);
+
+      if(error){
+        alert('Erro ao atualizar status: '+error.message);
+        return;
+      }
+
+      await refresh();
+      route('agendamentos');
+    };
+  });
+}if(p==='os'){
 
 document.querySelector('#op').onchange=()=>{
 const v=veiculos.find(v=>v.id===document.querySelector('#op').value);
@@ -194,15 +293,72 @@ route('os');
 }
 
 if(p==='dia'){
-  const render=()=>{
-    const d=day.value,
-    a=agendamentos.filter(x=>x.data===d).sort((x,y)=>x.horario.localeCompare(y.horario));
-    dayt.innerHTML='<table><tr><th>Hora</th><th>Cliente</th><th>Placa</th><th>Serviço</th><th>Status</th></tr>'+
-    a.map(x=>`<tr><td>${x.horario}</td><td>${esc(x.cliente_nome)}</td><td>${x.placa}</td><td>${esc(x.servico)}</td><td>${x.status}</td></tr>`).join('')+
-    '</table>'
-  };
-  day.onchange=render;
-  render()
+const render=()=>{
+const d=day.value
+const a=agendamentos
+.filter(x=>x.data===d)
+.sort((x,y)=>x.horario.localeCompare(y.horario))
+
+dayt.innerHTML=`
+<table>
+<tr>
+<th>Hora</th>
+<th>Cliente</th>
+<th>Placa</th>
+<th>Serviço</th>
+<th>Status</th>
+<th>Ação</th>
+</tr>
+
+${a.map(x=>`
+<tr>
+<td>${x.horario}</td>
+<td>${esc(x.cliente_nome)}</td>
+<td>${esc(x.placa)}</td>
+<td>${esc(x.servico)}</td>
+
+<td>
+<select class="dayStatus" data-id="${x.id}">
+${statuses.map(s=>`
+<option value="${s}" ${s===x.status?'selected':''}>${s}</option>
+`).join('')}
+</select>
+</td>
+
+<td>
+<button class="saveDayStatus" data-id="${x.id}">Salvar</button>
+</td>
+
+</tr>
+`).join('')}
+
+</table>
+`
+
+document.querySelectorAll('.saveDayStatus').forEach(btn=>{
+btn.onclick=async()=>{
+const id=btn.dataset.id
+const select=document.querySelector(`.dayStatus[data-id="${id}"]`)
+const status=select.value
+
+const {error}=await sb
+.from('agendamentos')
+.update({status})
+.eq('id',id)
+
+if(error){
+alert('Erro ao atualizar status: '+error.message)
+return
+}
+
+await refresh()
+route('dia')
+}
+})
+}
+
+day.onchange=render
+render()
 }
 }
 load()
