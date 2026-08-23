@@ -13,57 +13,61 @@ body {
    LOGIN
 ========================= */
 
+/* =========================
+   LOGIN
+========================= */
+
 .login {
   min-height: 100vh;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   padding: 40px 8%;
-  position: relative;
   overflow: hidden;
-
-  background-color: #050505;
-  background-image: none;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
+  background:
+    radial-gradient(circle at 25% 55%, rgba(215, 25, 32, 0.18), transparent 32%),
+    linear-gradient(90deg, #050505 0%, #090909 55%, #050505 100%);
 }
 
-/* Escurece a área onde existe o formulário que está
-   dentro da imagem de fundo */
+/* Moto */
 .login::before {
   content: "";
   position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(0,0,0,0.05) 0%,
-      rgba(0,0,0,0.08) 35%,
-      rgba(0,0,0,0.75) 58%,
-      rgba(0,0,0,0.92) 100%
-    );
+  left: 0;
+  bottom: 0;
+  width: 62%;
+  height: 92%;
+  background-image: url("./moto-login.png");
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: contain;
   z-index: 1;
+  pointer-events: none;
 }
 
-/* Login REAL do sistema */
-.login .box {
-  position: relative;
+/* brilho vermelho atrás da moto */
+.login::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 65%;
+  height: 4px;
+  background: #d71920;
+  box-shadow: 0 0 25px #d71920;
   z-index: 2;
-  width: 390px;
-  padding: 34px;
-  margin-right: 2%;
-  background: rgba(255,255,255,0.98);
-  border-radius: 18px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.55);
 }
 
+/* Caixa de login */
 .box {
+  position: relative;
+  z-index: 5;
   width: 390px;
   padding: 34px;
   background: rgba(255, 255, 255, 0.97);
   border-radius: 18px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
 }
 
 .box h1 {
@@ -119,7 +123,6 @@ body {
 .box button:hover {
   background: #b9151b;
 }
-
 /* =========================
    SISTEMA
 ========================= */
