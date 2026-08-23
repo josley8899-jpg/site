@@ -18,13 +18,14 @@ body {
   width: 100%;
 
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-end;
 
   position: relative;
   overflow: hidden;
 
   padding: 55px 10%;
+  padding-top: 90px;
 
   background-color: #050505;
   background-image: url("./login-bg-final.png");
