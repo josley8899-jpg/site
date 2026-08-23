@@ -30,7 +30,8 @@ body {
   background-image: url("./login-bg-final.png");
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: cover;
+  background-size: 100% 100%;
+}
 
 /* =========================
    CARD LOGIN
