@@ -26,7 +26,7 @@ async function load(){
  document.querySelector('#logout').onclick=async()=>{await sb.auth.signOut();login()}
  await refresh();route('dashboard')
 }
-function login(){app.innerHTML=`<div class="login"><div class="box"><h1>OFICINA <span>SHINERAY</span></h1><p>Versão 2 — acesso multiusuário</p><input id="email" placeholder="E-mail"><input id="pass" type="password" placeholder="Senha"><button id="login">Entrar</button><div id="msg"></div></div></div>`;document.querySelector('#login').onclick=async()=>{if(!sb){msg.textContent='Configure o .env com as credenciais do Supabase.';return}const {error}=await sb.auth.signInWithPassword({email:email.value,password:pass.value});if(error)msg.textContent=error.message;else load()}}
+function login(){app.innerHTML=`<div class="login"><div class="box"><h1>OFICINA <span>SHINERAY</span></h1><p>Login:</p><input id="email" placeholder="E-mail"><input id="pass" type="password" placeholder="Senha"><button id="login">Entrar</button><div id="msg"></div></div></div>`;document.querySelector('#login').onclick=async()=>{if(!sb){msg.textContent='Configure o .env com as credenciais do Supabase.';return}const {error}=await sb.auth.signInWithPassword({email:email.value,password:pass.value});if(error)msg.textContent=error.message;else load()}}
 async function refresh(){
  const q=async(t)=>{const r=await sb.from(t).select('*');return r.data||[]}
  clientes=await q('clientes');veiculos=await q('veiculos');agendamentos=await q('v_agendamentos');os=await q('ordens_servico');mecanicos=await q('mecanicos')
