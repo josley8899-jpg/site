@@ -92,13 +92,18 @@ ${agendamentos.map(a=>{
 <td>${esc(v.modelo)}</td>
 <td>${esc(a.cliente_nome)}</td>
 <td>${esc(a.servico)}</td>
-<td>${esc(a.observações)}</td>
-
+<td>${esc(a.observacoes||'')}</td>
 <td>
 <select id="status-appt-${a.id}">
-${statuses.map(s=>`
-<option value="${s}" ${s===a.status?'selected':''}>${s}</option>
-`).join('')}
+${statuses.map(s=>`<option value="${s}" ${s===a.status?'selected':''}>${s}</option>`).join('')}
+</select>
+</td>
+<td>
+<button class="saveApptStatus" data-id="${a.id}">Salvar</button>
+</td>
+</tr>
+`;
+}).join('')}
 </select>
 </td>
 
