@@ -19,12 +19,43 @@ body {
   align-items: center;
   justify-content: flex-end;
   padding: 40px 8%;
-  
+  position: relative;
+  overflow: hidden;
+
   background-color: #050505;
   background-image: url("./login-bg.png.png");
   background-repeat: no-repeat;
-  background-position: left center;
+  background-position: center center;
   background-size: cover;
+}
+
+/* Escurece a área onde existe o formulário que está
+   dentro da imagem de fundo */
+.login::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,0.05) 0%,
+      rgba(0,0,0,0.08) 35%,
+      rgba(0,0,0,0.75) 58%,
+      rgba(0,0,0,0.92) 100%
+    );
+  z-index: 1;
+}
+
+/* Login REAL do sistema */
+.login .box {
+  position: relative;
+  z-index: 2;
+  width: 390px;
+  padding: 34px;
+  margin-right: 2%;
+  background: rgba(255,255,255,0.98);
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.55);
 }
 
 .box {
