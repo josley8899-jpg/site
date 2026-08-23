@@ -81,43 +81,42 @@ ${statuses.map(s=>`<option>${s}</option>`).join('')}
 <th>Ação</th>
 </tr>
 
-${agendamentos.map(a=>{
-  const v=veiculos.find(v=>v.id===a.veiculo_id)||{};
-  return `
-<tr>
-<td>${a.data}</td>
-<td>${a.horario}</td>
-<td>${esc(a.placa)}</td>
-<td>${esc(v.marca)}</td>
-<td>${esc(v.modelo)}</td>
-<td>${esc(a.cliente_nome)}</td>
-<td>${esc(a.servico)}</td>
-<td>${esc(a.observacoes||'')}</td>
-<td>
-<select id="status-appt-${a.id}">
-${statuses.map(s=>`<option value="${s}" ${s===a.status?'selected':''}>${s}</option>`).join('')}
-</select>
-</td>
-<td>
-<button class="saveApptStatus" data-id="${a.id}">Salvar</button>
-</td>
-</tr>
-`;
-}).join('')}
-</select>
-</td>
+${agendamentos.map(a => {
+  const v = veiculos.find(v => v.id === a.veiculo_id) || {};
 
-<td>
-<button class="saveApptStatus" data-id="${a.id}">
-Salvar
-</button>
-</td>
-</tr>
-`).join('')}
+  return `
+  <tr>
+    <td>${a.data}</td>
+    <td>${a.horario}</td>
+    <td>${esc(v.placa || '')}</td>
+    <td>${esc(v.marca || '')}</td>
+    <td>${esc(v.modelo || '')}</td>
+    <td>${esc(a.cliente_nome || '')}</td>
+    <td>${esc(a.servico || '')}</td>
+    <td>${esc(a.observacoes || '')}</td>
+
+    <td>
+      <select id="status-${a.id}">
+        ${statuses.map(s =>
+          `<option value="${s}" ${s === a.status ? 'selected' : ''}>${s}</option>`
+        ).join('')}
+      </select>
+    </td>
+
+    <td>
+      <button class="saveApptStatus" data-id="${a.id}">
+        Salvar
+      </button>
+    </td>
+  </tr>
+  `;
+}).join('')}
 
 </table>
-</div>`
-}function osPage(){
+</div>
+`
+}
+function osPage(){
 return `<h1>Controle de Serviços / O.S.</h1>
 <div class="panel">
 <div class="grid">
