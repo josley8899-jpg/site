@@ -34,17 +34,17 @@ body {
 }
 
 .box {
-  width: 360px;
-  min-height: 455px;
+  width: 235px;
+  min-height: auto;
 
-  padding: 30px 28px 22px;
+  padding: 22px 20px 16px;
 
-  background: rgba(255,255,255,0.96);
+  background: rgba(255, 255, 255, 0.97);
 
-  border-radius: 9px;
+  border-radius: 7px;
 
   box-shadow:
-    0 20px 60px rgba(0,0,0,0.55);
+    0 15px 40px rgba(0, 0, 0, 0.45);
 
   position: relative;
   z-index: 3;
@@ -55,248 +55,91 @@ body {
 /* LOGO */
 
 .login-brand {
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 
 .brand-main {
-  font-family: Arial, sans-serif;
-
-  font-size: 43px;
-  line-height: 36px;
-
-  font-weight: 900;
-
-  font-style: italic;
-
-  letter-spacing: -4px;
-
-  color: #111;
-}
-
-.brand-main span {
-  color: #d71920;
+  font-size: 31px;
+  line-height: 27px;
+  letter-spacing: -3px;
 }
 
 .brand-sub {
-  margin-top: 4px;
-
-  font-size: 22px;
-
-  line-height: 22px;
-
-  font-weight: 900;
-
-  letter-spacing: -1px;
-
-  color: #111;
-}
-
-.brand-sub span {
-  color: #d71920;
+  margin-top: 2px;
+  font-size: 16px;
+  line-height: 17px;
 }
 
 /* TEXTO */
 
 .login-subtitle {
-  margin: 9px 0 5px;
-
-  color: #555;
-
-  font-size: 11px;
+  margin: 7px 0 4px;
+  font-size: 9px;
 }
+
 
 /* LINHA VERMELHA */
 
 .login-divider {
   width: 20px;
-  height: 3px;
-
-  background: #d71920;
-
-  margin: 5px auto 10px;
-
-  border-radius: 5px;
+  height: 2px;
+  margin: 4px auto 8px;
 }
+
 
 /* CAMPOS */
 
 .field {
-  width: 100%;
-
-  height: 36px;
-
-  margin: 7px 0;
-
-  display: flex;
-
-  align-items: center;
-
-  position: relative;
-
-  border: 1px solid #ddd;
-
-  border-radius: 5px;
-
-  background: #fff;
+  height: 27px;
+  margin: 5px 0;
+  border-radius: 4px;
 }
 
 .field-icon {
-  width: 34px;
-
-  color: #d71920;
-
-  font-size: 13px;
-
-  text-align: center;
-
-  flex-shrink: 0;
+  width: 27px;
+  font-size: 9px;
 }
 
 .field input {
-  width: 100%;
-
-  height: 100%;
-
-  padding: 0 8px;
-
-  margin: 0;
-
-  border: 0;
-
-  outline: none;
-
-  background: transparent;
-
-  color: #222;
-
-  font-size: 11px;
+  font-size: 9px;
 }
 
-.field input::placeholder {
-  color: #777;
-}
 
 /* OLHO DA SENHA */
 
 .show-password {
-  width: 30px;
-
-  height: 30px;
-
-  padding: 0;
-
-  margin: 0;
-
-  background: transparent;
-
-  color: #777;
-
-  border: 0;
-
-  font-size: 11px;
-
-  cursor: pointer;
-
-  flex-shrink: 0;
-}
-
-.show-password:hover {
-  background: transparent;
-
-  color: #d71920;
-
-  box-shadow: none;
-
-  transform: none;
+  width: 25px;
+  height: 24px;
+  font-size: 9px;
 }
 
 /* BOTÃO ENTRAR */
 
 .login-button {
-  width: 100%;
-
-  height: 38px;
-
-  margin-top: 8px;
-
-  padding: 0 12px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 8px;
-
-  background: #d71920;
-
-  color: #fff;
-
-  border: 0;
-
-  border-radius: 5px;
-
-  font-size: 11px;
-
-  font-weight: 700;
-
-  cursor: pointer;
+  height: 27px;
+  margin-top: 7px;
+  border-radius: 4px;
+  font-size: 9px;
 }
 
 .login-button span {
-  font-size: 18px;
-
-  line-height: 1;
+  font-size: 14px;
 }
 
-.login-button:hover {
-  background: #b9151b;
-
-  box-shadow:
-    0 6px 15px rgba(215,25,32,0.25);
-
-  transform: none;
-}
 
 /* ESQUECI SENHA */
 
 .forgot-password {
-  margin-top: 9px;
-
-  padding: 0;
-
-  background: transparent;
-
-  color: #d71920;
-
-  font-size: 9px;
-
-  font-weight: 700;
-}
-
-.forgot-password:hover {
-  background: transparent;
-
-  color: #b9151b;
-
-  box-shadow: none;
-
-  transform: none;
+  margin-top: 7px;
+  font-size: 7px;
 }
 
 /* MENSAGEM */
 
 #msg {
-  min-height: 15px;
-
-  margin-top: 6px;
-
-  color: #d71920;
-
-  text-align: center;
-
-  font-size: 10px;
+  min-height: 10px;
+  margin-top: 4px;
+  font-size: 8px;
 }
 
 /* =========================
