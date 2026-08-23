@@ -56,6 +56,8 @@ ${veiculos.map(v=>`<option value="${v.id}">${v.placa}</option>`).join('')}
 </select>
 <input id="acl" placeholder="Cliente" readonly>
 <input id="aw" placeholder="WhatsApp" readonly>
+<input id="am" placeholder="Marca" readonly>
+<input id="amo" placeholder="Modelo" readonly>
 <input id="as" placeholder="Serviço">
 <select id="ast">
 ${statuses.map(s=>`<option>${s}</option>`).join('')}
@@ -70,19 +72,27 @@ ${statuses.map(s=>`<option>${s}</option>`).join('')}
 <th>Data</th>
 <th>Hora</th>
 <th>Placa</th>
+<th>Marca</th>
+<th>Modelo</th>
 <th>Cliente</th>
 <th>Serviço</th>
+<th>Observações</th>
 <th>Status</th>
 <th>Ação</th>
 </tr>
 
-${agendamentos.map(a=>`
+${agendamentos.map(a=>{
+  const v=veiculos.find(v=>v.id===a.veiculo_id)||{};
+  return `
 <tr>
 <td>${a.data}</td>
 <td>${a.horario}</td>
 <td>${esc(a.placa)}</td>
+<td>${esc(v.marca)}</td>
+<td>${esc(v.modelo)}</td>
 <td>${esc(a.cliente_nome)}</td>
 <td>${esc(a.servico)}</td>
+<td>${esc(a.observações)}</td>
 
 <td>
 <select id="status-appt-${a.id}">
@@ -211,11 +221,14 @@ function bind(p){
  if(p==='clientes')document.querySelector('#saveClient').onclick=async()=>{const nome=cn.value.trim(),placa=cp.value.trim().toUpperCase();if(!nome||!placa)return msg.textContent='Nome e placa são obrigatórios.';const {data:c,error:e}=await sb.from('clientes').insert({nome,cpf_cnpj:cd.value,whatsapp:cw.value,email:ce.value,endereco:cend.value}).select().single();if(e)return msg.textContent=e.message;const {error:e2}=await sb.from('veiculos').insert({cliente_id:c.id,placa,marca:cm.value,modelo:cmo.value,ano:cy.value?Number(cy.value):null});if(e2){await sb.from('clientes').delete().eq('id',c.id);return msg.textContent=e2.message}await refresh();route('clientes')}
 if(p==='agendamentos'){
   ap.onchange=()=>{
-    const v=veiculos.find(v=>v.id===ap.value),
-          c=clientes.find(c=>c.id===v?.cliente_id);
-    acl.value=c?.nome||'';
-    aw.value=c?.whatsapp||'';
-  };
+  const v=veiculos.find(v=>v.id===ap.value),
+  c=clientes.find(c=>c.id===v?.cliente_id);
+
+  acl.value=c?.nome||'';
+  aw.value=c?.whatsapp||'';
+  am.value=v?.marca||'';
+  amo.value=v?.modelo||'';
+};
 
   saveAppt.onclick=async()=>{
     const {error}=await sb.from('agendamentos').insert({
