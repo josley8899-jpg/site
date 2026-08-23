@@ -174,6 +174,39 @@ Salvar
 </table>
 </div>`
 }
+function dayPage(){
+  const d=new Date().toISOString().slice(0,10);
+
+  return `
+    <h1>Agenda do Dia</h1>
+
+    <div class="panel">
+      <input id="day" type="date" value="${d}">
+      <div id="dayt"></div>
+    </div>
+  `;
+}
+
+function configPage(){
+  return `
+    <h1>Configurações</h1>
+
+    <div class="panel">
+      <h3>Configurações do sistema</h3>
+
+      <p>
+        Usuário conectado:
+        <b>${esc(user?.email||'')}</b>
+      </p>
+
+      <p>
+        Perfis, permissões, mecânicos, serviços,
+        prioridades e parâmetros ficam no banco Supabase.
+      </p>
+    </div>
+  `;
+}
+
 function bind(p){
  if(p==='clientes')document.querySelector('#saveClient').onclick=async()=>{const nome=cn.value.trim(),placa=cp.value.trim().toUpperCase();if(!nome||!placa)return msg.textContent='Nome e placa são obrigatórios.';const {data:c,error:e}=await sb.from('clientes').insert({nome,cpf_cnpj:cd.value,whatsapp:cw.value,email:ce.value,endereco:cend.value}).select().single();if(e)return msg.textContent=e.message;const {error:e2}=await sb.from('veiculos').insert({cliente_id:c.id,placa,marca:cm.value,modelo:cmo.value,ano:cy.value?Number(cy.value):null});if(e2){await sb.from('clientes').delete().eq('id',c.id);return msg.textContent=e2.message}await refresh();route('clientes')}
 if(p==='agendamentos'){
@@ -294,6 +327,11 @@ route('os');
 
 if(p==='dia'){
 const render=()=>{
+const day=document.querySelector('#day')
+const dayt=document.querySelector('#dayt')
+
+if(!day || !dayt)return
+
 const d=day.value
 const a=agendamentos
 .filter(x=>x.data===d)
@@ -357,7 +395,7 @@ route('dia')
 })
 }
 
-day.onchange=render
+document.querySelector('#day').onchange=render
 render()
 }
 }
