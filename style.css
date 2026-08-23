@@ -37,13 +37,14 @@ body {
 
 .login .box {
   width: 360px;
-  min-height: 430px;
+  min-height: 0;
+  height: auto;
 
-  padding: 34px 28px 28px;
+  padding: 28px 28px 22px;
 
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.97);
 
-  border-radius: 14px;
+  border-radius: 10px;
 
   box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.55);
@@ -65,7 +66,7 @@ body {
 }
 
 .brand-main {
-  font-size: 39px;
+  font-size: 36px;
   line-height: 0.9;
   font-weight: 800;
   letter-spacing: -2px;
@@ -77,9 +78,9 @@ body {
 }
 
 .brand-sub {
-  margin-top: 4px;
+  margin-top: 3px;
 
-  font-size: 22px;
+  font-size: 20px;
   line-height: 1;
 
   font-weight: 900;
@@ -110,7 +111,7 @@ body {
   width: 25px;
   height: 3px;
 
-  margin: 2px auto 12px;
+  margin: 3px auto 11px;
 
   background: #d71920;
 
