@@ -10,67 +10,66 @@ body {
 }
 
 /* =========================
-   LOGIN
+   LOGIN MOTUDO SHINERAY
 ========================= */
 
 .login {
   min-height: 100vh;
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 40px 8%;
+  padding: 40px 7%;
+  position: relative;
   overflow: hidden;
+
   background:
-    radial-gradient(circle at 25% 55%, rgba(215, 25, 32, 0.18), transparent 32%),
-    linear-gradient(90deg, #050505 0%, #090909 55%, #050505 100%);
-}
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,0.05) 0%,
+      rgba(0,0,0,0.35) 45%,
+      rgba(0,0,0,0.92) 100%
+    ),
+    url("./login-bg.png.png");
 
-/* Moto */
-.login::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 62%;
-  height: 92%;
-  background-image: url("./moto-login.png");
   background-repeat: no-repeat;
-  background-position: left bottom;
-  background-size: contain;
-  z-index: 1;
-  pointer-events: none;
+  background-position: center;
+  background-size: cover;
 }
 
-/* brilho vermelho atrás da moto */
-.login::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 65%;
-  height: 4px;
-  background: #d71920;
-  box-shadow: 0 0 25px #d71920;
+/* Card de login */
+
+.box {
+  width: 390px;
+  padding: 38px 34px;
+  background: rgba(255,255,255,0.97);
+  border-radius: 18px;
+
+  box-shadow:
+    0 25px 70px rgba(0,0,0,0.55),
+    0 0 0 1px rgba(255,255,255,0.15);
+
+  position: relative;
   z-index: 2;
 }
 
-/* Caixa de login */
-.box {
-  position: relative;
-  z-index: 5;
-  width: 390px;
-  padding: 34px;
-  background: rgba(255, 255, 255, 0.97);
-  border-radius: 18px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+/* detalhe vermelho superior */
+
+.box::before {
+  content: "";
+  display: block;
+  width: 58px;
+  height: 4px;
+  background: #d71920;
+  border-radius: 10px;
+  margin-bottom: 22px;
 }
 
 .box h1 {
   margin: 0 0 8px;
-  font-size: 32px;
+  font-size: 31px;
   line-height: 1.05;
   font-weight: 800;
+  letter-spacing: -0.5px;
 }
 
 .box h1 span {
@@ -78,46 +77,128 @@ body {
 }
 
 .box p {
-  margin: 0 0 24px;
+  margin: 0 0 25px;
   color: #666;
+  font-size: 14px;
 }
 
-.box label {
-  display: block;
-  margin: 14px 0 6px;
-  font-weight: 700;
-}
+/* Campos */
 
 .box input {
   width: 100%;
-  padding: 13px 14px;
-  margin: 0;
-  border: 1px solid #ccd1d7;
+  padding: 14px 15px;
+  margin: 7px 0;
+
+  border: 1px solid #d1d5db;
   border-radius: 9px;
+
+  background: #fff;
+  color: #171717;
+
   font-size: 14px;
   outline: none;
+
+  transition: 0.2s;
+}
+
+.box input::placeholder {
+  color: #8b8b8b;
 }
 
 .box input:focus {
   border-color: #d71920;
-  box-shadow: 0 0 0 3px rgba(215, 25, 32, 0.12);
+
+  box-shadow:
+    0 0 0 3px rgba(215,25,32,0.12);
 }
+
+/* Botão */
 
 .box button {
   width: 100%;
-  margin-top: 20px;
-  padding: 13px 16px;
+  margin-top: 16px;
+  padding: 14px 16px;
+
   background: #d71920;
   color: #fff;
+
   border: 0;
   border-radius: 9px;
+
   font-weight: 700;
   font-size: 15px;
+
   cursor: pointer;
+
+  transition:
+    background 0.2s,
+    transform 0.15s,
+    box-shadow 0.2s;
 }
 
 .box button:hover {
   background: #b9151b;
+
+  box-shadow:
+    0 8px 20px rgba(215,25,32,0.25);
+
+  transform: translateY(-1px);
+}
+
+.box button:active {
+  transform: translateY(0);
+}
+
+/* Mensagem de erro */
+
+#msg {
+  margin-top: 12px;
+  color: #d71920;
+  text-align: center;
+  font-size: 13px;
+}
+
+/* =========================
+   RESPONSIVO LOGIN
+========================= */
+
+@media (max-width: 1000px) {
+
+  .login {
+    justify-content: center;
+
+    background-position: center;
+  }
+
+  .box {
+    width: min(390px, 92%);
+  }
+}
+
+@media (max-width: 600px) {
+
+  .login {
+    padding: 20px;
+
+    background:
+      linear-gradient(
+        rgba(0,0,0,0.55),
+        rgba(0,0,0,0.75)
+      ),
+      url("./login-bg.png.png");
+
+    background-position: center;
+    background-size: cover;
+  }
+
+  .box {
+    width: 100%;
+    padding: 30px 25px;
+  }
+
+  .box h1 {
+    font-size: 27px;
+  }
 }
 /* =========================
    SISTEMA
